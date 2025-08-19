@@ -1,18 +1,19 @@
 package com.sdaia.cheko.menu.dto;
 
+import com.sdaia.cheko.category.dto.CategoryDto;
 import com.sdaia.cheko.dish.dto.DishResponseDto;
 import lombok.Data;
 
-import java.util.List;
+import java.util.Set;
 
 @Data
 public class MenuResponseDto {
 
     private Long id;
 
-    private List<String> categories;
+    private Set<CategoryDto> categories;
 
     private String restaurantName;
 
-    private List<DishResponseDto> dishes;
+    private Set<DishResponseDto> dishes;
 }

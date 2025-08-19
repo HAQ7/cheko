@@ -1,5 +1,6 @@
 package com.sdaia.cheko.dish.dto;
 
+import com.sdaia.cheko.category.dto.CategoryDto;
 import lombok.Builder;
 import lombok.Data;
 
@@ -18,5 +19,5 @@ public class DishResponseDto {
 
     private Boolean bestSeller;
 
-    private String category;
+    private CategoryDto category;
 }

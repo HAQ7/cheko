@@ -3,6 +3,7 @@ package com.sdaia.cheko.menu.service;
 
 import com.sdaia.cheko.menu.entity.Menu;
 import com.sdaia.cheko.menu.repository.MenuRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -13,6 +14,7 @@ public class MenuService implements IMenuService {
 
     private final MenuRepository menuRepository;
 
+    @Autowired
     public MenuService(MenuRepository menuRepository) {
         this.menuRepository = menuRepository;
     }

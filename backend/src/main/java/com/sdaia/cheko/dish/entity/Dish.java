@@ -1,5 +1,6 @@
 package com.sdaia.cheko.dish.entity;
 
+import com.sdaia.cheko.category.entity.Category;
 import com.sdaia.cheko.menu.entity.Menu;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -21,7 +22,9 @@ public class Dish {
 
     private Boolean bestSeller;
 
-    private String category;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     @ManyToOne
     @JoinColumn(name = "menu_id")

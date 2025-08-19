@@ -3,7 +3,8 @@ services:
     image: postgres:15
     environment:
       POSTGRES_DB: cheko_db
-      POSTGRES_USER: cheko_user
-      POSTGRES_PASSWORD: cheko_password
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
     ports:
-      - "5432:5432"
+      - "5431:5432"
+
