@@ -1,7 +1,11 @@
-export default function Map() {
+import Title from "../../components/title";
+import MapComponent from "./map-component";
+
+export default function MapPage() {
   return (
-    <main>
-      <h1>Map</h1>
-    </main>
+    <section>
+      <Title title="Map" count={12} />
+      <MapComponent />
+    </section>
   )
 }

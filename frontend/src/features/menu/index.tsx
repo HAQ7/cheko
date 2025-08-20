@@ -1,7 +1,9 @@
-export default function Menu() {
+import Title from "../../components/title";
+
+export default function MenuPage() {
   return (
-    <main>
-      <h1>Menu</h1>
-    </main>
+    <section>
+      <Title noLine title="Menu" count={5} />
+    </section>
   )
 }

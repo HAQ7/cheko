@@ -17,14 +17,14 @@ export default function ThemeToggle() {
             </div>
 
             <motion.div
-                className={`relative w-8 h-12 transition-colors ${isLight ? 'bg-dark-secondary' : 'bg-gray-800'} rounded-full shadow-inner flex flex-col items-center cursor-pointer`}
+                className={`relative w-8 h-12 transition-colors ${isLight ? 'bg-black' : 'bg-cheko-dark-secondary'} rounded-full shadow-inner flex flex-col items-center cursor-pointer`}
                 onClick={toggleTheme}
                 initial={false}
                 transition={{ type: 'spring', stiffness: 400, damping: 30 }}
             >
                 {/* Toggle Knob */}
                 <motion.div
-                    className={`absolute w-5 h-5 rounded-full transition-colors bg-primary shadow-md`}
+                    className={`absolute w-5 h-5 rounded-full transition-colors bg-cheko-primary shadow-md`}
                     layout
                     initial={false}
                     animate={{ top: isLight ? 4 : 24 }}
