@@ -3,7 +3,7 @@ export interface Restaurant {
   name: string;
   description: string;
   location: string;
-  menuId: string;
+  menuId?: string;
   imageURL: string;
   longitude: number;
   latitude: number;
