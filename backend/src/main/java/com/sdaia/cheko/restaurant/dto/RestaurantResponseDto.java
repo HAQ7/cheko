@@ -12,7 +12,14 @@ public class RestaurantResponseDto {
 
     private String description;
 
+    private Double latitude;
+
     private String location;
 
+    private Double longitude;
+
     private Long menuId;
+
+    private String imageURL;
+
 }

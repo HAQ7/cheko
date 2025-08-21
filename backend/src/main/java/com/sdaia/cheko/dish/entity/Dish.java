@@ -22,6 +22,8 @@ public class Dish {
 
     private Boolean bestSeller;
 
+    private String imageURL;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;

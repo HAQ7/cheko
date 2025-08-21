@@ -4,10 +4,13 @@ import com.sdaia.cheko.dish.entity.Dish;
 import com.sdaia.cheko.menu.entity.Menu;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Set;
 
-@Data
+@Setter
+@Getter
 @Entity
 public class Category {
     @Id

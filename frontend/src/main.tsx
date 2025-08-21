@@ -18,7 +18,10 @@ createRoot(document.getElementById("root")!).render(
                         <Route element={<MainLayout />}>
                             <Route path="/" element={<HomePage />} />
                             <Route path="/map" element={<MapPage />} />
-                            <Route path="/menu/:menuId" element={<MenuPage />} />
+                            <Route
+                                path="/menu/:menuId"
+                                element={<MenuPage />}
+                            />
                         </Route>
                     </Routes>
                 </SearchProvider>

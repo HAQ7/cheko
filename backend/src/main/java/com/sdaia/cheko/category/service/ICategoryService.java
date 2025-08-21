@@ -5,5 +5,5 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface ICategoryService {
-    public Page<Category> searchCategories(String category, Pageable pageable);
+    Page<Category> searchCategories(String category, Pageable pageable);
 }

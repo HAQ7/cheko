@@ -20,4 +20,6 @@ public class DishResponseDto {
     private Boolean bestSeller;
 
     private CategoryDto category;
+
+    private String imageURL;
 }

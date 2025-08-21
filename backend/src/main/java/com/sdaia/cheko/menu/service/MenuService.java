@@ -3,13 +3,14 @@ package com.sdaia.cheko.menu.service;
 
 import com.sdaia.cheko.menu.entity.Menu;
 import com.sdaia.cheko.menu.repository.MenuRepository;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 
 @Service
+@Transactional
 public class MenuService implements IMenuService {
 
     private final MenuRepository menuRepository;
@@ -20,8 +21,9 @@ public class MenuService implements IMenuService {
     }
 
     @Override
+    @Transactional
     public Menu getMenu(Long id) {
-        return menuRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Menu not found"));
+        return menuRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Menu not found"));
     }
 
 

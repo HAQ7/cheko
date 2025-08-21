@@ -4,7 +4,7 @@ import MapComponent from "./map-component";
 export default function MapPage() {
   return (
     <section>
-      <Title title="Map" count={12} />
+      <Title title="Map"/>
       <MapComponent />
     </section>
   )

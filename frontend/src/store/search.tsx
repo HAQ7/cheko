@@ -1,11 +1,12 @@
+import type { Category } from '@/types/category';
 import React, { createContext, useContext, useState } from 'react';
 
 // Define the search context interface
 interface SearchContextValue {
   searchTerm: string;
-  filterTerm: string;
+  filterTerm: Category[];
   setSearchTerm: (term: string) => void;
-  setFilterTerm: (term: string) => void;
+  setFilterTerm: (term: Category[]) => void;
   clearSearch: () => void;
   clearFilter: () => void;
   clearAll: () => void;
@@ -21,19 +22,19 @@ interface SearchProviderProps {
 // Search provider component
 export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [filterTerm, setFilterTerm] = useState<string>('');
+  const [filterTerm, setFilterTerm] = useState<Category[]>([]);
 
   const clearSearch = () => {
     setSearchTerm('');
   };
 
   const clearFilter = () => {
-    setFilterTerm('');
+    setFilterTerm([]);
   };
 
   const clearAll = () => {
     setSearchTerm('');
-    setFilterTerm('');
+    setFilterTerm([]);
   };
 
   const value: SearchContextValue = {

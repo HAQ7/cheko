@@ -1,29 +1,64 @@
-import Title from "../../components/title";
-import RestaurantCard from "./restaurant-card";
+import type { Restaurant } from "@/types/restaurant";
+import type { Page } from "@/types/page";
+import Loading from "@/components/loading";
+import { useSearch } from "@/store/search";
+import { useEffect, useState } from "react";
+import RestaurantResult from "./restaurant-result";
+import getRestaurants from "./requests/get-restaurants";
+import searchRestaurants from "./requests/search-restaurants";
 
 export default function HomePage() {
-  return (
-    <section>
-      <Title title="Restaurants" count={120} />
-      <ul className="mt-4 grid gap-4">
-        <li>
-          <RestaurantCard
-            name="The Great Restaurant"
-            description="A wonderful place to dine with family and friends."
-            location="123 Main St, Cityville"
-            menuId="1"
-          />
-        </li>
-        <li>
-          <RestaurantCard
-            name="Tasty Treats"
-            description="Delicious food that will make your taste buds dance."
-            location="456 Elm St, Townsville"
-            menuId="2"
-          />
-        </li>
-        {/* Add more RestaurantCard components as needed */}
-      </ul>
-    </section>
-  );
+    const { searchTerm, filterTerm, setFilterTerm, setSearchTerm } = useSearch();
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [restaurantData, setRestaurantData] =
+        useState<Page<Restaurant> | null>(null);
+
+    useEffect(() => {
+        setSearchTerm("");
+        setFilterTerm([]);
+    }, []);
+
+    useEffect(() => {
+        setIsLoading(true);
+        setError(null);
+
+        const fetchData = async () => {
+            let data: Page<Restaurant> | null = null;
+
+            try {
+                if (searchTerm || filterTerm.length > 0) {
+                    data = await searchRestaurants({ searchTerm, filterTerm });
+                    return;
+                }
+
+                data = await getRestaurants();
+            } catch (error) {
+                console.error("Error fetching restaurants:", error);
+                setError("Error fetching restaurants");
+            } finally {
+                if (data) {
+                    console.log("Fetched restaurant data:", data);
+                    setRestaurantData(data);
+                }
+
+                setIsLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [searchTerm, filterTerm]);
+
+    if (isLoading) return <Loading />;
+    if (error) return <div>Error loading restaurants</div>;
+    if (!restaurantData) return null;
+
+    return (
+        <RestaurantResult
+            filterTerm={filterTerm}
+            searchTerm={searchTerm}
+            title={"All Restaurants"}
+            restaurantData={restaurantData}
+        />
+    );
 }

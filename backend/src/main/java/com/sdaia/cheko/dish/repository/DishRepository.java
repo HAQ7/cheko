@@ -13,12 +13,12 @@ import java.util.List;
 public interface DishRepository extends JpaRepository<Dish, Long> {
 
     // All filters (menuId is required)
-    Page<Dish> findByMenu_IdAndNameContainingIgnoreCaseAndCategory(
-            Long menuId, String name, Category category, Pageable pageable);
+    Page<Dish> findByMenu_IdAndCategory_AndNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(
+            Long menuId, Category category, String name, String description, Pageable pageable);
 
-    // MenuId + Name only
-    Page<Dish> findByMenu_IdAndNameContainingIgnoreCase(
-            Long menuId, String name, Pageable pageable);
+    // Search in name OR description only
+    Page<Dish> findByMenu_IdAndNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(
+            Long menuId, String name, String description, Pageable pageable);
 
     // MenuId + Category only
     Page<Dish> findByMenu_IdAndCategory(Long menuId, Category category, Pageable pageable);

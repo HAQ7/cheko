@@ -36,12 +36,12 @@ public class DishService implements IDishService {
 
         if (hasName && hasCategory) {
             // MenuId + Name + Category
-            return dishRepository.findByMenu_IdAndNameContainingIgnoreCaseAndCategory(menuId, name, category, pageable);
+            return dishRepository.findByMenu_IdAndCategory_AndNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(menuId, category, name,name, pageable);
         }
 
         if (hasName) {
             // MenuId + Name only
-            return dishRepository.findByMenu_IdAndNameContainingIgnoreCase(menuId, name, pageable);
+            return dishRepository.findByMenu_IdAndNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(menuId, name, name, pageable);
         }
         if (hasCategory) {
             // MenuId + Category only
