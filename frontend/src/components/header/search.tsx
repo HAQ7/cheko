@@ -13,7 +13,12 @@ export default function Search() {
     console.log(selectedCategories);
 
     return (
-        <div
+        <form
+            onSubmit={(e) => {
+                e.preventDefault();
+                setSearchTerm(searchTermRef.current?.value || "");
+                setFilterTerm(selectedCategories);
+            }}
             className={`w-full sm:h-12 h-46 z-10 md:mt-28 mt-34 md:mx-28 mx-4 ${
                 theme === "dark"
                     ? "bg-cheko-dark-secondary text-white"
@@ -57,15 +62,12 @@ export default function Search() {
             </div>
             <div className="sm:flex-1 flex justify-center items-center px-2 min-h-12 py-2 sm:py-0">
                 <button
-                    onClick={() => {
-                        setSearchTerm(searchTermRef.current?.value || "");
-                        setFilterTerm(selectedCategories);
-                    }}
+                    type="submit"
                     className="bg-cheko-primary px-6 py-3 sm:px-4 sm:py-2 text-black rounded-lg text-sm sm:text-xs cursor-pointer hover:bg-cheko-primary-hover transition-colors w-full sm:w-auto"
                 >
                     Search
                 </button>
             </div>
-        </div>
+        </form>
     );
 }

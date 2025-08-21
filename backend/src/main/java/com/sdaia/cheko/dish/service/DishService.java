@@ -26,7 +26,6 @@ public class DishService implements IDishService {
 
     @Override
     public Page<Dish> searchDishes(Long menuId, String name, Category category, Pageable pageable) {
-        // Validate that menuId is provided
         if (menuId == null) {
             throw new IllegalArgumentException("Menu ID is required");
         }
@@ -35,20 +34,16 @@ public class DishService implements IDishService {
         boolean hasCategory = category != null;
 
         if (hasName && hasCategory) {
-            // MenuId + Name + Category
             return dishRepository.findByMenu_IdAndCategory_AndNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(menuId, category, name,name, pageable);
         }
 
         if (hasName) {
-            // MenuId + Name only
             return dishRepository.findByMenu_IdAndNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(menuId, name, name, pageable);
         }
         if (hasCategory) {
-            // MenuId + Category only
             return dishRepository.findByMenu_IdAndCategory(menuId, category, pageable);
         }
 
-        // MenuId only
         return dishRepository.findByMenu_Id(menuId, pageable);
 
     }

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useSearch } from "@/store/search";
@@ -21,6 +22,7 @@ export default function MapComponent() {
     const mapContainerRef = useRef(null as any);
     const markersRef = useRef<mapboxgl.Marker[]>([]);
     const { theme } = useTheme();
+    const navigate = useNavigate();
 
     const { searchTerm, filterTerm, setFilterTerm, setSearchTerm } =
         useSearch();
@@ -98,12 +100,15 @@ export default function MapComponent() {
                 "Adding markers for restaurants:",
                 restaurantData.content.length
             );
+            
+            // Create a global function for navigation that will be accessible from popup HTML
+            (window as any).__navigateToMenu = (menuId: string) => {
+                navigate(`/menu/${menuId}`);
+            };
+            
             // Add markers for each restaurant
             restaurantData.content.forEach((restaurant, index) => {
                 // Parse location string to get coordinates
-                // Assuming location format is "lat,lng" or you might need to geocode
-                // For now, I'll generate random coordinates within Riyadh bounds
-                // You should replace this with actual coordinates from your data
                 const coordinates = getRestaurantCoordinates(restaurant);
 
                 // Create custom marker element
@@ -160,7 +165,7 @@ export default function MapComponent() {
                         restaurant.menuId
                             ? `
                         <button 
-                            onclick="window.location.href='/menu/${restaurant.menuId}'"
+                            onclick="window.__navigateToMenu('${restaurant.menuId}')"
                             style="
                                 background-color: #edabcb;
                                 color: white;
@@ -211,10 +216,14 @@ export default function MapComponent() {
         } else {
             mapRef.current.on("load", addMarkers);
         }
-    }, [restaurantData]);
+
+        // Cleanup function to remove the global navigation function
+        return () => {
+            delete (window as any).__navigateToMenu;
+        };
+    }, [restaurantData, navigate]);
 
     // Helper function to get coordinates from restaurant data
-    // You should replace this with actual coordinate parsing based on your data format
     const getRestaurantCoordinates = (
         restaurant: Restaurant
     ): [number, number] => {
@@ -274,15 +283,15 @@ export default function MapComponent() {
                 />
             </div>
             {restaurantData && (
-                <div className="mt-4 p-4 bg-gray-50 border border-gray-200 rounded-lg">
-                    <h3 className="font-semibold text-gray-800 mb-2">
+                <div className={`mt-4 p-4 ${theme === "dark" ? "bg-cheko-dark-secondary !text-white" : "bg-gray-50 border-gray-200"} rounded-lg transition-colors`}>
+                    <h3 className="font-semibold mb-2">
                         Restaurants ({restaurantData.content.length})
                     </h3>
                     <div className="space-y-2 max-h-60 overflow-y-auto">
                         {restaurantData.content.map((restaurant, index) => (
                             <div
                                 key={restaurant.id}
-                                className="flex items-center gap-3 p-2 bg-white rounded border border-gray-200 hover:shadow-sm transition-shadow cursor-pointer"
+                                className={`flex items-center gap-3 p-2 ${theme === "dark" ? "bg-cheko-dark-primary text-white" : "bg-white border-gray-200"} rounded hover:shadow-sm transition-shadow cursor-pointer`}
                                 onClick={() => {
                                     // Focus on marker when clicking list item
                                     const marker = markersRef.current[index];
@@ -300,7 +309,7 @@ export default function MapComponent() {
                                     {index + 1}
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                    <p className="font-medium text-gray-900 truncate">
+                                    <p className="font-medium truncate">
                                         {restaurant.name}
                                     </p>
                                     <p className="text-xs text-gray-500 truncate">
